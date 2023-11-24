@@ -1,25 +1,28 @@
 {
-  "name": "hackacademy_ejemplo_mvc_sequelize",
+  "name": "hackacademy_proyecto_final",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "tables": "node createDatabaseTables.js",
+    "start": "nodemon server.js",
     "seeders": "node seeders/runAllSeeders.js"
   },
   "keywords": [],
   "author": "Hack Academy",
   "license": "ISC",
-  "description": "Hack Academy - Ejemplo de MVC y Sequelize",
+  "description": "Hack Academy - Proyecto final",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "method-override": "^3.0.0",
-    "mysql2": "^3.6.1",
-    "sequelize": "^6.33.0"
+    "express-jwt": "^8.4.1",
+    "formidable": "^2.1.2",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^7.6.3",
+    "nodemon": "^3.0.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.1.0"
