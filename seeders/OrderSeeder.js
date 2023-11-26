@@ -19,8 +19,9 @@ module.exports = async () => {
         items: selectedProducts.map((product) => product._id),
         state: "Pending",
       });
-
+      buyer.orders.push(newOrder);
       orderSeeder.push(newOrder);
+      await buyer.save();
     }
 
     await Order.insertMany(orderSeeder);
