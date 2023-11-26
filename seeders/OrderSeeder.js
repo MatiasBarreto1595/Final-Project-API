@@ -9,19 +9,15 @@ module.exports = async () => {
     const products = await Product.find();
     const orderSeeder = [];
 
-    // Iterar sobre cada comprador para crear órdenes
     for (const buyer of buyers) {
-      // Generar un número aleatorio entre 3 y 10 para la cantidad de productos en la orden
       const numberOfProducts = _.random(3, 10);
 
-      // Seleccionar productos aleatorios para la orden
       const selectedProducts = _.sampleSize(products, numberOfProducts);
 
-      // Crear una nueva orden para el comprador con los productos seleccionados
       const newOrder = new Order({
         buyer: buyer._id,
         items: selectedProducts.map((product) => product._id),
-        state: "Pending", // O el estado que prefieras
+        state: "Pending",
       });
 
       orderSeeder.push(newOrder);
