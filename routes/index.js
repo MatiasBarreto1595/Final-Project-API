@@ -1,3 +1,5 @@
+const productsRoutes = require("./productsRoutes");
+
 module.exports = (app) => {
   /**
    * Notar que si el sitio está en español, tiene sentido que las URLs que se
@@ -7,4 +9,5 @@ module.exports = (app) => {
    */
   // app.use("/", publicRoutes);
   // app.use("/", authRoutes);
+  app.use("/products", productsRoutes);
 };
