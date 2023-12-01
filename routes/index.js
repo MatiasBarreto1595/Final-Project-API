@@ -1,5 +1,9 @@
-const productsRoutes = require("./productsRoutes");
-
+const productRoutes = require("./productRoutes");
+const categoryRoutes = require("./categoryRoutes");
+const orderRoutes = require("./orderRoutes");
+const authRoutes = require("./authRoutes");
+const adminRoutes = require("./adminRoutes");
+const buyerRoutes = require("./buyerRoutes");
 module.exports = (app) => {
   /**
    * Notar que si el sitio está en español, tiene sentido que las URLs que se
@@ -8,6 +12,10 @@ module.exports = (app) => {
    * en inglés.
    */
   // app.use("/", publicRoutes);
-  // app.use("/", authRoutes);
-  app.use("/products", productsRoutes);
+  app.use("/", authRoutes);
+  app.use("/order", orderRoutes);
+  app.use("/product", productRoutes);
+  app.use("/category", categoryRoutes);
+  app.use("/buyer", buyerRoutes);
+  app.use("/admin", adminRoutes);
 };

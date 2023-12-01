@@ -1,9 +1,10 @@
 const Product = require("../models/Product");
+const Category = require("../models/Category");
 
 // Display a listing of the resource.
 async function index(req, res) {
-  const products = await Product.find().populate("category");
-  return res.json(products);
+  const categories = await Category.find().populate("products");
+  return res.json(categories);
 }
 
 // Display the specified resource.

@@ -1,13 +1,11 @@
 const Product = require("../models/Product");
+const Admin = require("../models/Admin");
 
 // Display a listing of the resource.
 async function index(req, res) {
-  const products = await Product.find().populate("category");
-  return res.json(products);
+  const admins = await Admin.find();
+  return res.json(admins);
 }
-
-// Display the specified resource.
-async function show(req, res) {}
 
 // Store a newly created resource in storage.
 async function store(req, res) {}
@@ -23,7 +21,6 @@ async function destroy(req, res) {}
 
 module.exports = {
   index,
-  show,
   store,
   update,
   destroy,
