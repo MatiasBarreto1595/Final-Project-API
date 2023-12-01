@@ -1,12 +1,14 @@
 const Admin = require("../models/Admin");
+const bcrypt = require("bcryptjs");
 
 module.exports = async () => {
+  const hashedPassword = await bcrypt.hash("1234", 8);
   const adminSeeder = [];
   const newAdmin = new Admin({
     firstname: "Dwayne ",
     lastname: "Johnson",
     email: "laroca@laroca.laroca",
-    password: "laroca123",
+    password: hashedPassword,
   });
   adminSeeder.push(newAdmin);
   await Admin.insertMany(adminSeeder);
