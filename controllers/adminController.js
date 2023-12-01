@@ -1,34 +1,24 @@
-const Product = require("../models/Product");
 const Admin = require("../models/Admin");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 // Display a listing of the resource.
 async function index(req, res) {
   try {
-    const products = await Product.find();
     const admins = await Admin.find();
-    return res.json({ products, admins });
+    return res.json(admins);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Internal server error" });
+    return res.json({ error: "Not admins found" });
   }
 }
 
 // Show a specified resource.
 async function show(req, res) {
   try {
-    const { id } = req.params;
-    const admin = await Admin.findById(id);
-
-    if (admin) {
-      return res.json({ admin });
-    } else {
-      return res.status(404).json({ error: "Administrador no encontrado" });
-    }
+    const admin = await Admin.findById(req.params.id);
+    return res.json(admin);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Error interno del servidor" });
+    return res.json({ error: "Admin not found" });
   }
 }
 
@@ -65,18 +55,16 @@ async function store(req, res) {
 }
 
 // Update the specified resource in storage.
-try {
-  const adminToUpdate = await Admin.findById(req.params.id);
-  let admin;
-    admin = await Admin.findById(req.auth.sub);
-    !admin && (admin = await Admin.findById(req.auth.sub));
-    if (!admin) return res.json({ msg: "Not logged in" });
-    
+async function update(req, res) {
+  try {
+    const adminToUpdate = await Admin.findById(req.params.id);
+
+    let verifyPassword = null;
     const { firstname, lastname, email, password, newPassword } = req.body;
-    const verifyPassword = await bcrypt.compare(password, adminToUpdate.password);
+    password && (verifyPassword = await bcrypt.compare(password, adminToUpdate.password));
     const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : undefined;
 
-    if (password && verifyPassword) {
+    if (verifyPassword) {
       await Admin.findByIdAndUpdate(req.params.id, {
         firstname,
         lastname,
@@ -90,29 +78,24 @@ try {
         email,
       });
     }
-    return res.json(adminToUpdate);
+    const adminUpdated = await Admin.findById(req.params.id);
+    return res.json(adminUpdated);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
+}
 
 // Remove the specified resource from storage.
 async function destroy(req, res) {
   try {
     const { id } = req.params;
-    const deletedAdmin = await Admin.findByIdAndDelete(id);
-
-    if (deletedAdmin) {
-      return res.json({ message: "Administrador eliminado exitosamente" });
-    } else {
-      return res.status(404).json({ error: "Administrador no encontrado" });
-    }
+    await Admin.findByIdAndDelete(id);
+    return res.json({ message: "Administrador eliminado exitosamente" });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Error interno del servidor" });
+    return res.json({ error: "Administrador no encontrado" });
   }
 }
-
 
 // ...
 
