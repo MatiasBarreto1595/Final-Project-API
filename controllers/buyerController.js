@@ -43,14 +43,15 @@ async function store(req, res) {
 
 // Update the specified resource in storage.
 async function update(req, res) {
+  const buyerToUpdate = await Buyer.findById(req.params.id);
   let buyer;
   buyer = await Buyer.findById(req.auth.sub);
   !buyer && (buyer = await Admin.findById(req.auth.sub));
   if (!buyer) return res.json({ msg: "Not logued in" });
 
   const { firstname, lastname, email, direction, phone, password, newPassword } = req.body;
-  const verifyPassword = await bcrypt.compare(password, buyer.password);
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const verifyPassword = await bcrypt.compare(password, buyerToUpdate.password);
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
   if (password && verifyPassword) {
     await Buyer.findByIdAndUpdate(req.params.id, {
       firstname,
@@ -69,7 +70,6 @@ async function update(req, res) {
       phone,
     });
   }
-  const buyerToUpdate = await Buyer.findById(req.params.id);
   return res.json(buyerToUpdate);
 }
 
