@@ -20,11 +20,19 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-  let admin;
-  admin = await Admin.findById(req.auth.sub);
-  if (!admin) {
-    return res.json({ msg: "Not logged in" });
-  } else {
+  try {
+    let admin;
+
+    if (req.auth.sub) {
+      admin = await Admin.findById(req.auth.sub);
+
+      if (!admin) {
+        return res.json({ msg: "Not logged in" });
+      }
+    } else {
+      return res.status(401).json({ msg: "Unauthorized" });
+    }
+
     const form = formidable({
       multiples: true,
       uploadDir: __dirname + "/../public/img",
@@ -35,23 +43,20 @@ async function store(req, res) {
       try {
         const { name } = fields;
 
-        const existingCategory = await Category.findOne({ name });
-
-        if (existingCategory) {
-          return res.status(400).json({ error: "La categoría ya existe" });
-        }
-
+        console.log(files);
         const newCategory = await Category.create({
           name,
           image: files.image.newFilename,
         });
-
         res.json(newCategory);
       } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Error interno del servidor" });
       }
     });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
 }
 
