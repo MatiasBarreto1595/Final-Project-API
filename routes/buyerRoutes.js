@@ -11,6 +11,10 @@ router.patch(
   checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
   buyerController.update,
 );
-router.delete("/:id", buyerController.destroy);
+router.delete(
+  "/:id",
+  checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
+  buyerController.destroy,
+);
 
 module.exports = router;
