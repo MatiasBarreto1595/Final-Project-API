@@ -52,10 +52,16 @@ async function update(req, res) {
   });
 
   form.parse(req, async (err, fields, files) => {
+    let category1 = "";
     const product = await Product.findById(req.params.id);
     const { name, description, ingredients, price, stock, category, bestSeller } = fields;
     let slug = name.trim().toLowerCase().replace(/\s+/g, "-");
-    const category1 = await Category.findOne({ name: category });
+    if(!category){
+    category1 = await Category.findOne({ name: category });  
+    }else{
+    category1 = product.category;  
+    }
+    
     await Product.findByIdAndUpdate(req.params.id, {
       name,
       description,
