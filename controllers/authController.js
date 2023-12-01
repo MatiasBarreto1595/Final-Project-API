@@ -1,4 +1,5 @@
 const Buyer = require("../models/Buyer");
+const Admin = require("../models/Admin");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -7,6 +8,7 @@ async function getToken(req, res) {
 
   if (req.body.email.includes("@")) {
     user = await Buyer.findOne({ email: req.body.email });
+    !user && (user = await Admin.findOne({ email: req.body.email }));
   }
   if (!user) return res.json({ msg: "Wrong credentials..." });
 
