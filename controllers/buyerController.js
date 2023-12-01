@@ -74,7 +74,29 @@ async function update(req, res) {
 }
 
 // Remove the specified resource from storage.
-async function destroy(req, res) {}
+async function destroy(req, res) {
+  try {
+  
+    const adminToDelete = await Admin.findById(req.params.id);
+    let admin;
+    admin = await Admin.findById(req.auth.sub);
+    !admin && (admin = await Admin.findById(req.auth.sub));
+    if (!admin) return res.json({ msg: "Not logged in" });
+
+    const verifyPassword = await bcrypt.compare(req.body.password, admin.password);
+
+    if (verifyPassword) {
+      await Admin.findByIdAndDelete(req.params.id);
+      return res.json({ message: "Admin deleted successfully" });
+    } else {
+      return res.json({ msg: "Wrong credentials" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 
 // Otros handlers...
 // ...
