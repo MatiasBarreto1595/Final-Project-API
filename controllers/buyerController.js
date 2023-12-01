@@ -12,8 +12,12 @@ async function index(req, res) {
 
 // Display the specified resource.
 async function show(req, res) {
-  const buyer = await Buyer.findById(req.params.id).select("-password");
-  return res.json({ buyer });
+  try {
+    const buyer = await Buyer.findById(req.params.id).select("-password");
+    return res.json({ buyer });
+  } catch (error) {
+    return res.json({ msg: "Buyer not found" });
+  }
 }
 
 // Store a newly created resource in storage.
@@ -43,38 +47,61 @@ async function store(req, res) {
 
 // Update the specified resource in storage.
 async function update(req, res) {
-  let buyer;
-  buyer = await Buyer.findById(req.auth.sub);
-  !buyer && (buyer = await Admin.findById(req.auth.sub));
-  if (!buyer) return res.json({ msg: "Not logued in" });
+  try {
+    const buyerToUpdate = await Buyer.findById(req.params.id);
+    let myBuyer = await Buyer.findById(req.auth.sub);
+    !myBuyer && (bumyBuyeryer = await Admin.findById(req.auth.sub));
+    if (!myBuyer) return res.json({ msg: "Not logued in" });
 
-  const { firstname, lastname, email, direction, phone, password, newPassword } = req.body;
-  const verifyPassword = await bcrypt.compare(password, buyer.password);
-  const hashedPassword = await bcrypt.hash(password, 10);
-  if (password && verifyPassword) {
-    await Buyer.findByIdAndUpdate(req.params.id, {
-      firstname,
-      lastname,
-      email,
-      direction,
-      phone,
-      password: hashedPassword,
-    });
-  } else {
-    await Buyer.findByIdAndUpdate(req.params.id, {
-      firstname,
-      lastname,
-      email,
-      direction,
-      phone,
-    });
+    const { firstname, lastname, email, direction, phone, password, newPassword } = req.body;
+    const verifyPassword = await bcrypt.compare(password, buyerToUpdate.password);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    if (password && verifyPassword) {
+      await Buyer.findByIdAndUpdate(req.params.id, {
+        firstname,
+        lastname,
+        email,
+        direction,
+        phone,
+        password: hashedPassword,
+      });
+    } else {
+      await Buyer.findByIdAndUpdate(req.params.id, {
+        firstname,
+        lastname,
+        email,
+        direction,
+        phone,
+      });
+    }
+    return res.json(buyerToUpdate);
+  } catch (error) {
+    return res.json({ msg: "Buyer not found" });
   }
-  const buyerToUpdate = await Buyer.findById(req.params.id);
-  return res.json(buyerToUpdate);
 }
 
 // Remove the specified resource from storage.
-async function destroy(req, res) {}
+async function destroy(req, res) {
+  try {
+    const buyerToDestroy = await Buyer.findById(req.params.id);
+
+    let myAdmin;
+    const myBuyer = await Buyer.findById(req.auth.sub);
+    !myBuyer && (myAdmin = await Admin.findById(req.auth.sub));
+
+    if (myBuyer && myBuyer._id === buyerToDestroy._id) {
+      await Buyer.findByIdAndDelete(req.params.id);
+      return res.json({ msg: "Buyer successfully destroy" });
+    } else if (myAdmin) {
+      await Buyer.findByIdAndDelete(req.params.id);
+      return res.json({ msg: "Buyer successfully destroy" });
+    } else {
+      return res.json({ msg: "You don't have enough permissions" });
+    }
+  } catch (error) {
+    return res.json({ msg: "Buyer not found" });
+  }
+}
 
 // Otros handlers...
 // ...
