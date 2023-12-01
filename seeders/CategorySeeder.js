@@ -1,11 +1,11 @@
 const Category = require("../models/Category");
-const products = require("./ProductSeeder.js")
+const products = require("./ProductSeeder.js");
 
 module.exports = async () => {
   const categories = [
     {
       name: "juices",
-      image:"https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
+      image: "https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
       products: [],
     },
     {
@@ -14,24 +14,23 @@ module.exports = async () => {
       products: [],
     },
     {
-      name: "nut milks & smoothies",
+      name: "nut-milks-&-smoothies",
       image: "https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
       products: [],
     },
     {
-      name: "sparkling tonics",
+      name: "sparkling-tonics",
       image: "https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
       products: [],
     },
   ];
 
+  const categoriesSeeder = [];
+  for (const category of categories) {
+    const newCategory = new Category(category);
+    categoriesSeeder.push(newCategory);
+  }
 
-const categoriesSeeder = [];
-for (const category of categories) {
-  const newCategory = new Category(category);
-  categoriesSeeder.push(newCategory);
-}
-
-await Category.insertMany(categoriesSeeder);
-console.log("[Database] Se corrió el seeder de Categorias.");
+  await Category.insertMany(categoriesSeeder);
+  console.log("[Database] Se corrió el seeder de Categorias.");
 };

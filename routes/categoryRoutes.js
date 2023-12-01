@@ -3,7 +3,7 @@ const router = express.Router();
 const categoryController = require("../controllers/categoryController");
 
 router.get("/", categoryController.index);
-router.get("/:id", categoryController.show);
+router.get("/:name", categoryController.show);
 router.post("/", categoryController.store);
 router.patch("/:id", categoryController.update);
 router.delete("/:id", categoryController.destroy);
