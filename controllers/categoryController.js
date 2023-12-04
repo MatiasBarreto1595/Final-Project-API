@@ -14,7 +14,7 @@ async function index(req, res) {
 
 // Display the specified resource.
 async function show(req, res) {
-  const category = await Category.findOne({ name: req.params.name }).populate("products");
+  const category = await Category.findOne({ _id: req.params.id }).populate("products");
 
   res.json({ category });
 }

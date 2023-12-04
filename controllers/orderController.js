@@ -32,6 +32,7 @@ async function store(req, res) {
 async function update(req, res) {
   await Order.findByIdAndUpdate(req.params.id, { items: req.body.items, state: req.body.state });
   const order = await Order.findById(req.params.id);
+
   return res.json(order);
 }
 
@@ -41,7 +42,6 @@ async function destroy(req, res) {
   await Buyer.findByIdAndUpdate(order.buyer, { $pull: { orders: req.params.id } });
   await Order.findByIdAndRemove(req.params.id);
   res.json("Se ha borrado la orden");
-
 }
 
 // Otros handlers...

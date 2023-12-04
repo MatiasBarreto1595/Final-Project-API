@@ -3,7 +3,7 @@ const router = express.Router();
 const categoryController = require("../controllers/categoryController");
 const { expressjwt: checkJwt } = require("express-jwt");
 router.get("/", categoryController.index);
-router.get("/:name", categoryController.show);
+router.get("/:id", categoryController.show);
 router.post(
   "/",
   checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),

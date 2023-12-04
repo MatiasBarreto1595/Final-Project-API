@@ -48,9 +48,9 @@ async function store(req, res) {
 // Update the specified resource in storage.
 async function update(req, res) {
   try {
-    const buyerToUpdate = await Buyer.findById(req.params.id);
+    let buyerToUpdate = await Buyer.findById(req.params.id);
     let myBuyer = await Buyer.findById(req.auth.sub);
-    !myBuyer && (bumyBuyeryer = await Admin.findById(req.auth.sub));
+    !myBuyer && (myBuyer = await Admin.findById(req.auth.sub));
     if (!myBuyer) return res.json({ msg: "Not logued in" });
 
     const { firstname, lastname, email, direction, phone, password, newPassword } = req.body;
@@ -74,6 +74,7 @@ async function update(req, res) {
         phone,
       });
     }
+    buyerToUpdate = await Buyer.findById(req.params.id);
     return res.json(buyerToUpdate);
   } catch (error) {
     return res.json({ msg: "Buyer not found" });

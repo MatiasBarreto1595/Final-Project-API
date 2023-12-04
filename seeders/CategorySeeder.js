@@ -14,12 +14,12 @@ module.exports = async () => {
       products: [],
     },
     {
-      name: "nut-milks-&-smoothies",
+      name: "nut milks & smoothies",
       image: "https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
       products: [],
     },
     {
-      name: "sparkling-tonics",
+      name: "sparkling tonics",
       image: "https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
       products: [],
     },
