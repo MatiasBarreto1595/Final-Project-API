@@ -37,6 +37,7 @@ async function store(req, res) {
 async function update(req, res) {
   await Order.findByIdAndUpdate(req.params.id, { items: req.body.items, state: req.body.state });
   const order = await Order.findById(req.params.id);
+
   return res.json(order);
 }
 
