@@ -45,11 +45,10 @@ async function store(req, res) {
     });
 
     const { _id } = newAdmin;
-    const token = jwt.sign({ sub: _id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ sub: _id }, process.env.JWT_SECRET_ADMIN);
 
     return res.json({ token, firstname, lastname, email, id: _id });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
 }

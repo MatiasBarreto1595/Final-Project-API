@@ -1,10 +1,6 @@
-const Product = require("../models/Product");
 const Category = require("../models/Category");
 const Admin = require("../models/Admin");
 const formidable = require("formidable");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const products = require("../seeders/productData");
 
 // Display a listing of the resource.
 async function index(req, res) {
