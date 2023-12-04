@@ -5,23 +5,23 @@ const { expressjwt: checkJwt } = require("express-jwt");
 
 router.get(
   "/",
-  checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
   buyerController.index,
 );
 router.get(
   "/:id",
-  checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
   buyerController.show,
 );
 router.post("/", buyerController.store);
 router.patch(
   "/:id",
-  checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
   buyerController.update,
 );
 router.delete(
   "/:id",
-  checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
   buyerController.destroy,
 );
 
