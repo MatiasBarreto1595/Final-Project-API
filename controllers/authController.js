@@ -8,14 +8,22 @@ async function getToken(req, res) {
 
   if (req.body.email.includes("@")) {
     user = await Buyer.findOne({ email: req.body.email });
-    !user && (user = await Admin.findOne({ email: req.body.email }));
+    if (!user) {
+      user = await Admin.findOne({ email: req.body.email });
+      user.isAdmin = true;
+    }
   }
   if (!user) return res.json({ msg: "Wrong credentials..." });
 
   const verifyPassword = await bcrypt.compare(req.body.password, user.password);
   if (!verifyPassword) return res.json({ msg: "Wrong credentials..." });
 
-  const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET);
+  let token;
+
+  user.isAdmin
+    ? (token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET_ADMIN))
+    : (token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET_BUYER));
+
   const { firstname, lastname, email, _id } = user;
   return res.json({
     token,

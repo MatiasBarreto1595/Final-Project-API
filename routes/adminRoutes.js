@@ -4,7 +4,7 @@ const adminController = require("../controllers/adminController");
 const ensureIsAdmin = require("../middlewares/ensureIsAdmin");
 const { expressjwt: checkJwt } = require("express-jwt");
 
-router.use(checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }));
+router.use(checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }));
 router.use(ensureIsAdmin);
 
 router.get("/", adminController.index);

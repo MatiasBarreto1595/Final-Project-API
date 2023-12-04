@@ -6,17 +6,17 @@ router.get("/", categoryController.index);
 router.get("/:name", categoryController.show);
 router.post(
   "/",
-  checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
   categoryController.store,
 );
 router.patch(
   "/:id",
-  checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
   categoryController.update,
 );
 router.delete(
   "/:id",
-  checkJwt({ secret: process.env.JWT_SECRET, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
   categoryController.destroy,
 );
 
