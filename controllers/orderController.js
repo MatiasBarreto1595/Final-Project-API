@@ -17,11 +17,16 @@ async function show(req, res) {
 
 // Store a newly created resource in storage.
 async function store(req, res) {
+  let items = req.body.items;
   const newOrder = await Order.create({
     buyer: req.auth.sub,
-    items: req.body.items,
+    items: items,
     state: "Pending",
   });
+  for (let item of items) {
+    const newStock = item.stock - 1;
+    await Product.findByIdAndUpdate(item._id, { stock: newStock });
+  }
   const buyer = await Buyer.findById(req.auth.sub);
   buyer.orders.push(newOrder);
   await buyer.save();
@@ -32,6 +37,7 @@ async function store(req, res) {
 async function update(req, res) {
   await Order.findByIdAndUpdate(req.params.id, { items: req.body.items, state: req.body.state });
   const order = await Order.findById(req.params.id);
+
   return res.json(order);
 }
 
@@ -41,7 +47,6 @@ async function destroy(req, res) {
   await Buyer.findByIdAndUpdate(order.buyer, { $pull: { orders: req.params.id } });
   await Order.findByIdAndRemove(req.params.id);
   res.json("Se ha borrado la orden");
-
 }
 
 // Otros handlers...

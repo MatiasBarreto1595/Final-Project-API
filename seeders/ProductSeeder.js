@@ -4,8 +4,8 @@ const products = require("./productData");
 
 module.exports = async () => {
   const JuiceCategory = await Category.findOne({ name: "juices" });
-  const SparklingTonicsCategory = await Category.findOne({ name: "sparkling-tonics" });
-  const NutMilkSmoothiesCategory = await Category.findOne({ name: "nut-milks-&-smoothies" });
+  const SparklingTonicsCategory = await Category.findOne({ name: "sparkling tonics" });
+  const NutMilkSmoothiesCategory = await Category.findOne({ name: "nut milks & smoothies" });
   const ElixirsCategory = await Category.findOne({ name: "elixirs" });
 
   const productsSeeder = [];

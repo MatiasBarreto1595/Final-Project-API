@@ -1,10 +1,6 @@
-const Product = require("../models/Product");
 const Category = require("../models/Category");
 const Admin = require("../models/Admin");
 const formidable = require("formidable");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const products = require("../seeders/productData");
 
 // Display a listing of the resource.
 async function index(req, res) {
@@ -14,7 +10,7 @@ async function index(req, res) {
 
 // Display the specified resource.
 async function show(req, res) {
-  const category = await Category.findOne({ name: req.params.name }).populate("products");
+  const category = await Category.findOne({ _id: req.params.id }).populate("products");
 
   res.json({ category });
 }

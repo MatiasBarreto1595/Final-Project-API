@@ -30,7 +30,7 @@ async function store(req, res) {
       name,
       description,
       ingredients,
-      image: files.image.newFilename,
+      image: files.image.name,
       price,
       stock,
       category: category1,

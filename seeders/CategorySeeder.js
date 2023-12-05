@@ -5,22 +5,22 @@ module.exports = async () => {
   const categories = [
     {
       name: "juices",
-      image: "https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
+      image: "juices.PNG",
       products: [],
     },
     {
       name: "elixirs",
-      image: "https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
+      image: "elixir0.png",
       products: [],
     },
     {
-      name: "nut-milks-&-smoothies",
-      image: "https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
+      name: "nut milks & smoothies",
+      image: "proteina.PNG",
       products: [],
     },
     {
-      name: "sparkling-tonics",
-      image: "https://juiceshop.com/cdn/shop/files/Juice-2_1600x.png?v=1674444624",
+      name: "sparkling tonics",
+      image: "can.png",
       products: [],
     },
   ];
