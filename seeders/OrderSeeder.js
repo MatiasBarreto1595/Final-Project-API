@@ -16,7 +16,7 @@ module.exports = async () => {
 
       const newOrder = new Order({
         buyer: buyer._id,
-        items: selectedProducts.map((product) => product._id),
+        items: selectedProducts.map((product) => product),
         state: "Pending",
       });
       buyer.orders.push(newOrder);
