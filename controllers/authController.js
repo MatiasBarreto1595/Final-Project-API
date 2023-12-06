@@ -10,7 +10,7 @@ async function getToken(req, res) {
     user = await Buyer.findOne({ email: req.body.email });
     if (!user) {
       user = await Admin.findOne({ email: req.body.email });
-      user.isAdmin = true;
+      user && (user.isAdmin = true);
     }
   }
   if (!user) return res.json({ msg: "Wrong credentials..." });
