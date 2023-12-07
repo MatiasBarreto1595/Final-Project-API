@@ -18,7 +18,7 @@ const products = {
         name: "Deep Green",
         description:
           "Deep Green contains a potent dose of chlorophyll-rich leafy greens to deeply nourish and oxygenate cells for optimal health. Kale, Spinach, Parsley, Romaine, Cucumber, Celery, Lemon",
-        ingredientes: "Kale, Spinach, Parsley, Romaine, Cucumber, Celery, Lemon",
+        ingredients: "Kale, Spinach, Parsley, Romaine, Cucumber, Celery, Lemon",
         image: ["https://juiceshop.com/cdn/shop/products/Deep_Green_800x.jpg?v=1581718593"],
         price: 10.5,
         stock: 100,
