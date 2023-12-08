@@ -24,7 +24,7 @@ async function store(req, res) {
     state: "Pending",
   });
   for (let item of items) {
-    const newStock = item.stock - 1;
+    const newStock = item.stock - qty;
     await Product.findByIdAndUpdate(item._id, { stock: newStock });
   }
   const buyer = await Buyer.findById(req.auth.sub);
