@@ -13,7 +13,12 @@ module.exports = async () => {
       const numberOfProducts = _.random(3, 10);
 
       const selectedProducts = _.sampleSize(products, numberOfProducts);
-
+      for (const selectedProduct of selectedProducts){
+        
+        selectedProduct.set({ qty: 1 });
+        console.log(selectedProduct);
+        await selectedProduct.save();
+      }
       const newOrder = new Order({
         buyer: buyer._id,
         items: selectedProducts.map((product) => product),
