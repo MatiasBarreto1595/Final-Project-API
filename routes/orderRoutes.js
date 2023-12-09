@@ -10,7 +10,11 @@ router.post(
   checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
   orderController.store,
 );
-router.patch("/:id", orderController.update);
+router.patch(
+  "/:id",
+  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
+  orderController.update,
+);
 router.delete("/:id", orderController.destroy);
 
 module.exports = router;

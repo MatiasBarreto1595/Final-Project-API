@@ -86,7 +86,6 @@ async function update(req, res) {
         }
 
         await category.save();
-
         res.json(category);
       } catch (error) {
         console.error(error);
