@@ -12,18 +12,12 @@ module.exports = async () => {
 
     for (const buyer of buyers) {
       const numberOfProducts = _.random(3, 10);
-      const otherRandomNumber = _.random(0, products.length);
 
-      for (let product of products) {
+      let selectedProducts = _.sampleSize(products, numberOfProducts);
+      for (let product of selectedProducts) {
         arr.push({ item: product, qty: 1, total: product.price * 1 });
       }
 
-      // let selectedProducts = _.sampleSize(products, numberOfProducts);
-      // for (let selectedProduct of selectedProducts) {
-      //   selectedProduct.qty = 1;
-      //   console.log(selectedProduct);
-      //   await selectedProduct.save();
-      // }
       const newOrder = new Order({
         buyer: buyer._id,
         items: arr,
