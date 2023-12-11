@@ -11,7 +11,7 @@ async function index(req, res) {
 
 // Display the specified resource.
 async function buyerIndex(req, res) {
-  const orders = await Order.find({buyer: req.params.id}).populate("items").populate("buyer");
+  const orders = await Order.find({ buyer: req.params.id }).populate("items").populate("buyer");
   return res.json(orders);
 }
 
@@ -23,13 +23,19 @@ async function store(req, res) {
     items: items,
     state: "Pending",
   });
+
+  console.log(newOrder);
   for (let item of items) {
     console.log(item);
     const newStock = item.item.stock - item.qty;
     await Product.findByIdAndUpdate(item._id, { stock: newStock });
   }
+  console.log(" req.auth.sub", req.auth.sub);
+
   const buyer = await Buyer.findById(req.auth.sub);
+  console.log("buyer=", buyer);
   buyer.orders.push(newOrder);
+
   await buyer.save();
   return res.json(newOrder);
 }
