@@ -26,8 +26,9 @@ async function show(req, res) {
 async function store(req, res) {
   try {
     const { firstname, lastname, email, password } = req.body;
-
+    console.log(req.body);
     if (!firstname || !lastname || !email || !password) {
+      console.log(firstname);
       return res.json({ msg: "All fields are required" });
     }
     const existingAdmin = await Admin.findOne({ email });
@@ -43,7 +44,6 @@ async function store(req, res) {
       email,
       password: hashedPassword,
     });
-
     const { _id } = newAdmin;
     const token = jwt.sign({ sub: _id }, process.env.JWT_SECRET_ADMIN);
 
