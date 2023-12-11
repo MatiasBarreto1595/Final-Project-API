@@ -24,16 +24,15 @@ async function store(req, res) {
 
   form.parse(req, async (err, fields, files) => {
     const { name, description, ingredients, price, stock, category, bestSeller } = fields;
-    let slug = name.trim().toLowerCase().replace(/\s+/g, "-");
-    const category1 = await Category.findOne({ name: category });
+      let slug = name.trim().toLowerCase().replace(/\s+/g, "-");
     await Product.create({
       name,
       description,
       ingredients,
-      image: files.image.name,
+      image: files.image.newFilename,
       price,
       stock,
-      category: category1,
+      category: category,
       bestSeller,
       slug,
     });

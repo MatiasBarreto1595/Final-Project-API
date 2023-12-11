@@ -10,8 +10,8 @@ async function index(req, res) {
 }
 
 // Display the specified resource.
-async function show(req, res) {
-  const orders = await Order.findById(req.params.id).populate("items").populate("buyer");
+async function buyerIndex(req, res) {
+  const orders = await Order.find({buyer: req.params.id}).populate("items").populate("buyer");
   return res.json(orders);
 }
 
@@ -55,7 +55,7 @@ async function destroy(req, res) {
 
 module.exports = {
   index,
-  show,
+  buyerIndex,
   store,
   update,
   destroy,
