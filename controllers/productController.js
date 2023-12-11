@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
 const formidable = require("formidable");
+const { el } = require("date-fns/locale");
 
 // Display a listing of the resource.
 async function index(req, res) {
@@ -51,7 +52,18 @@ async function update(req, res) {
   });
 
   form.parse(req, async (err, fields, files) => {
+    const imagenes = [];
     const product = await Product.findById(req.params.id);
+
+    for (let i = 0; i < product.image.length; i++) {
+      const currentImage = Object.keys(files)[i];
+      if (files[currentImage].size === 0) {
+        imagenes.push(product.image[i]);
+      } else {
+        imagenes.push(files[currentImage].newFilename);
+      }
+    }
+
     const { name, description, ingredients, price, stock, category, bestSeller } = fields;
     let slug = name.trim().toLowerCase().replace(/\s+/g, "-");
     const category1 = await Category.findOne({ name: category });
@@ -60,7 +72,7 @@ async function update(req, res) {
       name,
       description,
       ingredients,
-      image: files.image && files.image.newFilename,
+      image: imagenes,
       price,
       stock,
       category: category ? category1 : product.category,
