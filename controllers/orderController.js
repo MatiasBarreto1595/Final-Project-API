@@ -23,12 +23,18 @@ async function store(req, res) {
     items: items,
     state: "Pending",
   });
+
+  console.log(newOrder);
   for (let item of items) {
     const newStock = item.item.stock - item.qty;
     await Product.findByIdAndUpdate(item._id, { stock: newStock });
   }
+  console.log(" req.auth.sub", req.auth.sub);
+
   const buyer = await Buyer.findById(req.auth.sub);
+  console.log("buyer=", buyer);
   buyer.orders.push(newOrder);
+
   await buyer.save();
   return res.json(newOrder);
 }
