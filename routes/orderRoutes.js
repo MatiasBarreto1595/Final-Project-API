@@ -7,7 +7,7 @@ router.get("/", orderController.index);
 router.get("/:id", orderController.show);
 router.post(
   "/",
-  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_SECRET_BUYER, algorithms: ["HS256"] }),
   orderController.store,
 );
 router.patch(
