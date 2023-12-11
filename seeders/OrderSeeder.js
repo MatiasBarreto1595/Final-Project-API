@@ -8,22 +8,28 @@ module.exports = async () => {
     const buyers = await Buyer.find();
     const products = await Product.find();
     const orderSeeder = [];
+    let arr = [];
 
     for (const buyer of buyers) {
       const numberOfProducts = _.random(3, 10);
+      const otherRandomNumber = _.random(0, products.length);
 
-      const selectedProducts = _.sampleSize(products, numberOfProducts);
-      for (const selectedProduct of selectedProducts){
-        
-        selectedProduct.set({ qty: 1 });
-        console.log(selectedProduct);
-        await selectedProduct.save();
+      for (let product of products) {
+        arr.push({ item: product, qty: 1, total: product.price * 1 });
       }
+
+      // let selectedProducts = _.sampleSize(products, numberOfProducts);
+      // for (let selectedProduct of selectedProducts) {
+      //   selectedProduct.qty = 1;
+      //   console.log(selectedProduct);
+      //   await selectedProduct.save();
+      // }
       const newOrder = new Order({
         buyer: buyer._id,
-        items: selectedProducts.map((product) => product),
+        items: arr,
         state: "Pending",
       });
+      arr = [];
       buyer.orders.push(newOrder);
       orderSeeder.push(newOrder);
       await buyer.save();

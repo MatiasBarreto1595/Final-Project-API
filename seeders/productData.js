@@ -7,6 +7,7 @@ const products = {
       ingredients: "Pomegranate, Beet, Carrot, Orange, Pineapple",
       image: [
         "https://juiceshop.com/cdn/shop/products/Beta_Beet_ad4af152-505a-4342-af4e-5275559d25e9_800x.jpg?v=1602879784",
+        "https://juiceshop.com/cdn/shop/products/Beta_Beet_ad4af152-505a-4342-af4e-5275559d25e9_800x.jpg?v=1602879784",
       ],
       price: 11,
       stock: 50,
