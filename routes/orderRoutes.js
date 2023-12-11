@@ -4,7 +4,7 @@ const orderController = require("../controllers/orderController");
 const { expressjwt: checkJwt } = require("express-jwt");
 
 router.get("/", orderController.index);
-router.get("/:id", orderController.show);
+router.get("/:id", orderController.buyerIndex);
 router.post(
   "/",
   checkJwt({ secret: process.env.JWT_SECRET_BUYER, algorithms: ["HS256"] }),

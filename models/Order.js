@@ -4,7 +4,7 @@ const orderSchema = new Schema({
   buyer: { type: Schema.Types.ObjectId, ref: "Buyer" },
   items: Array,
   state: String,
-});
+},{ timestamps: true });
 
 const Order = mongoose.model("Order", orderSchema);
 
