@@ -11,14 +11,14 @@ async function index(req, res) {
 
 // Display the specified resource.
 async function show(req, res) {
-  if(req.auth.sub === req.params.id || req.auth.sub.role === "admin"){
-  try {
-    const buyer = await Buyer.findById(req.params.id).select("-password").populate("orders");
-    return res.json( buyer );
-  } catch (error) {
-    return res.json({ msg: "Buyer not found" });
+  if (req.auth.sub === req.params.id || req.auth.sub.role === "admin") {
+    try {
+      const buyer = await Buyer.findById(req.params.id).select("-password").populate("orders");
+      return res.json(buyer);
+    } catch (error) {
+      return res.json({ msg: "Buyer not found" });
+    }
   }
-}
 }
 
 // Store a newly created resource in storage.
@@ -96,8 +96,7 @@ async function destroy(req, res) {
     let myAdmin;
     const myBuyer = await Buyer.findById(req.auth.sub);
     !myBuyer && (myAdmin = await Admin.findById(req.auth.sub));
-
-    if (myBuyer && myBuyer._id === buyerToDestroy._id) {
+    if (myBuyer && req.params.id === req.auth.sub) {
       await Buyer.findByIdAndDelete(req.params.id);
       return res.json({ msg: "Buyer successfully destroy" });
     } else if (myAdmin) {
