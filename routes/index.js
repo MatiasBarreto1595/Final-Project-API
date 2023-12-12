@@ -4,6 +4,7 @@ const orderRoutes = require("./orderRoutes");
 const authRoutes = require("./authRoutes");
 const adminRoutes = require("./adminRoutes");
 const buyerRoutes = require("./buyerRoutes");
+const resetDBRoutes = require("./resetDBRoutes");
 module.exports = (app) => {
   /**
    * Notar que si el sitio está en español, tiene sentido que las URLs que se
@@ -18,4 +19,5 @@ module.exports = (app) => {
   app.use("/category", categoryRoutes);
   app.use("/buyer", buyerRoutes);
   app.use("/admin", adminRoutes);
+  app.use("/resetdb", resetDBRoutes);
 };

@@ -5,7 +5,7 @@ module.exports = async () => {
   const hashedPassword = await bcrypt.hash("1234", 8);
   const adminSeeder = [];
   const newAdmin = new Admin({
-    firstname: "Dwayne ",
+    firstname: "Dwayne",
     lastname: "Johnson",
     email: "laroca@laroca.laroca",
     password: hashedPassword,
