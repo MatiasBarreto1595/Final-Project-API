@@ -58,9 +58,10 @@ async function update(req, res) {
     if (!myBuyer) return res.json({ msg: "Not logued in" });
 
     const { firstname, lastname, email, direction, phone, password, newPassword } = req.body;
-    const verifyPassword = await bcrypt.compare(password, buyerToUpdate.password);
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
     if (password && verifyPassword) {
+      const verifyPassword = await bcrypt.compare(password, buyerToUpdate.password);
+      if (!verifyPassword) return res.json({ msg: "wrong credentials" });
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
       await Buyer.findByIdAndUpdate(req.params.id, {
         firstname,
         lastname,
