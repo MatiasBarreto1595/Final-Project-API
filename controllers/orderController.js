@@ -17,11 +17,17 @@ async function buyerIndex(req, res) {
 
 // Store a newly created resource in storage.
 async function store(req, res) {
+  let totalvalue = 0;
   let items = req.body.items;
+    for (const item of items) {
+      totalvalue += item.item.price* item.qty;
+    }
+  
   const newOrder = await Order.create({
     buyer: req.auth.sub,
     items: items,
     state: "Pending",
+    totalValue: totalvalue, 
   });
 
   console.log(newOrder);

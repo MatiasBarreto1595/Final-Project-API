@@ -9,6 +9,7 @@ module.exports = async () => {
     const products = await Product.find();
     const orderSeeder = [];
     let arr = [];
+    let totalvalue = 0;
 
     for (const buyer of buyers) {
       const numberOfProducts = _.random(3, 10);
@@ -17,11 +18,16 @@ module.exports = async () => {
       for (let product of selectedProducts) {
         arr.push({ item: product, qty: 1, total: product.price * 1 });
       }
+      totalvalue = 0;
+      for (const item of arr) {
+        totalvalue += item.item.price* item.qty;
+      }
 
       const newOrder = new Order({
         buyer: buyer._id,
         items: arr,
         state: "Pending",
+        totalValue: totalvalue,
       });
       arr = [];
       buyer.orders.push(newOrder);

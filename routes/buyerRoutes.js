@@ -10,7 +10,7 @@ router.get(
 );
 router.get(
   "/:id",
-  checkJwt({ secret: process.env.JWT_SECRET_ADMIN, algorithms: ["HS256"] }),
+  checkJwt({ secret: process.env.JWT_SECRET_BUYER, algorithms: ["HS256"] }),
   buyerController.show,
 );
 router.post("/", buyerController.store);
