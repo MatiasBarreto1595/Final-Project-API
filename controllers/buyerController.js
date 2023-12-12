@@ -11,12 +11,14 @@ async function index(req, res) {
 
 // Display the specified resource.
 async function show(req, res) {
+  if(req.auth.sub === req.params.id || req.auth.sub.role === "admin"){
   try {
-    const buyer = await Buyer.findById(req.params.id).select("-password");
-    return res.json({ buyer });
+    const buyer = await Buyer.findById(req.params.id).select("-password").populate("orders");
+    return res.json( buyer );
   } catch (error) {
     return res.json({ msg: "Buyer not found" });
   }
+}
 }
 
 // Store a newly created resource in storage.
