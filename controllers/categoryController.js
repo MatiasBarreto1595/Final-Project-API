@@ -1,6 +1,7 @@
 const Category = require("../models/Category");
 const Admin = require("../models/Admin");
 const formidable = require("formidable");
+const Product = require("../models/Product");
 
 // Display a listing of the resource.
 async function index(req, res) {
@@ -102,6 +103,8 @@ async function destroy(req, res) {
   if (!admin) {
     return res.json({ msg: "Not logged in" });
   } else {
+   const categoryToRemove = await Category.findById(req.params.id);
+    await Product.deleteMany({category: categoryToRemove._id});
     await Category.findByIdAndRemove(req.params.id);
     res.json("Se ha borrado la categoría");
   }
