@@ -1,7 +1,12 @@
 const Category = require("../models/Category");
 const Admin = require("../models/Admin");
+const fs = require("fs");
+const path = require("path");
 const formidable = require("formidable");
 const Product = require("../models/Product");
+const { createClient } = require("@supabase/supabase-js");
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+
 
 // Display a listing of the resource.
 async function index(req, res) {
@@ -16,6 +21,7 @@ async function show(req, res) {
   res.json({ category });
 }
 
+//STORE//
 async function store(req, res) {
   try {
     let admin;
@@ -32,24 +38,36 @@ async function store(req, res) {
 
     const form = formidable({
       multiples: true,
-      uploadDir: __dirname + "/../public/img",
       keepExtensions: true,
+      /* uploadDir: __dirname + "/../public/img", */
     });
 
     form.parse(req, async (err, fields, files) => {
+      const ext = path.extname(files.image.filepath);
+      const newFileName = `image_${Date.now()}${ext}`;
+
+      const { data, error } = await supabase.storage
+        .from("img") // ("nombre del bucket")
+        .upload(newFileName, fs.createReadStream(files.image.filepath), {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: files.image.mimetype,
+          duplex: "half",
+        });
+
       try {
         const { name } = fields;
 
-        console.log(files);
         const newCategory = await Category.create({
           name,
-          image: files.image.newFilename,
+          image: newFileName,
         });
         res.json(newCategory);
       } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Error interno del servidor" });
       }
+
     });
   } catch (error) {
     console.error(error);

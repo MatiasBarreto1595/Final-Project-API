@@ -1,6 +1,10 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
 const formidable = require("formidable");
+const fs = require("fs");
+const path = require("path");
+const { createClient } = require("@supabase/supabase-js");
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 const { el } = require("date-fns/locale");
 
 // Display a listing of the resource.
@@ -19,26 +23,43 @@ async function show(req, res) {
 async function store(req, res) {
   const form = formidable({
     multiples: true,
-    uploadDir: __dirname + "/../public/img",
+    /* uploadDir: __dirname + "/../public/img", */
     keepExtensions: true,
   });
 
   form.parse(req, async (err, fields, files) => {
+    const ext = path.extname(files.image.filepath);
+    const newFileName = `image_${Date.now()}${ext}`;
+    
+
+    const { data, error } = await supabase.storage
+      .from("img")
+      .upload(newFileName, fs.createReadStream(files.image.filepath), {
+        cacheControl: "3600",
+        upsert: false,
+        contentType: files.image.mimetype,
+        duplex: "half",
+
+      });
+
     const { name, description, ingredients, price, stock, category, bestSeller } = fields;
-      let slug = name.trim().toLowerCase().replace(/\s+/g, "-");
+    let slug = name.trim().toLowerCase().replace(/\s+/g, "-");
+
     await Product.create({
       name,
       description,
       ingredients,
-      image: files.image.newFilename,
+      image: newFileName,
       price,
       stock,
       category: category,
       bestSeller,
       slug,
     });
+
     const product = await Product.findOne({ name: name });
     await Category.findByIdAndUpdate(product.category, { $push: { products: product } });
+
     res.json("Producto creado");
   });
 }
