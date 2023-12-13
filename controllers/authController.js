@@ -21,8 +21,8 @@ async function getToken(req, res) {
   let token;
 
   user.isAdmin
-    ? ((token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET_ADMIN)), (user.role = "admin"))
-    : ((token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET_BUYER)), (user.role = "buyer"));
+    ? ((token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET)), (user.role = "admin"))
+    : ((token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET)), (user.role = "buyer"));
 
   const { firstname, lastname, email, _id, role } = user;
   return res.json({

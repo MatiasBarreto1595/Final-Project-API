@@ -11,7 +11,6 @@ const products = {
       ],
       price: 11,
       stock: 50,
-
       bestSeller: true,
       slug: "fall-punch",
     },
@@ -23,8 +22,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Deep_Green_800x.jpg?v=1581718593"],
       price: 10.5,
       stock: 100,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "deep-green",
     },
     {
@@ -35,7 +33,6 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/A_Deep_Green_800x.jpg?v=1581706922"],
       price: 10.5,
       stock: 34,
-
       bestSeller: false,
       slug: "a-deep-green",
     },
@@ -48,7 +45,6 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Local_Green_800x.jpg?v=1582066265"],
       price: 11,
       stock: 73,
-
       bestSeller: false,
       slug: "local-green",
     },
@@ -60,7 +56,6 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Pure_Celery_800x.jpg?v=1581709488"],
       price: 9,
       stock: 21,
-
       bestSeller: true,
       slug: "celery-juice",
     },
@@ -72,7 +67,6 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Bright_Green_800x.jpg?v=1581709231"],
       price: 10.5,
       stock: 50,
-
       bestSeller: false,
       slug: "bright-green",
     },
@@ -87,7 +81,6 @@ const products = {
       ],
       price: 11.5,
       stock: 73,
-
       bestSeller: false,
       slug: "detox-green",
     },
@@ -99,7 +92,6 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Citrus_Gold_800x.jpg?v=1581710158"],
       price: 10,
       stock: 0,
-
       bestSeller: true,
       slug: "citrus-gold",
     },
@@ -111,7 +103,6 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Beta_Beet_800x.jpg?v=1581708299"],
       price: 10.5,
       stock: 25,
-
       bestSeller: true,
       slug: "beta-beet",
     },
@@ -123,8 +114,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Jalapeno_Punch_800x.jpg?v=1582065638"],
       price: 10,
       stock: 60,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "jalapeno-punch",
     },
   ],
@@ -138,7 +128,6 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/tumeric-1_800x.jpg?v=1672529908"],
       price: 3.5,
       stock: 100,
-
       bestSeller: true,
       slug: "turmeric-ginger-tonic",
     },
@@ -151,8 +140,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/detox-1_800x.jpg?v=1672529675"],
       price: 3.5,
       stock: 100,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "detox-tonic",
     },
     {
@@ -164,8 +152,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Elderberry-update-1_800x.jpg?v=1680660808"],
       price: 3.5,
       stock: 100,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "elderberry-tonic",
     },
     {
@@ -177,8 +164,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/pineapple-1_800x.jpg?v=1672529953"],
       price: 3.5,
       stock: 100,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "pineapple-mint-tonic",
     },
   ],
@@ -194,7 +180,6 @@ const products = {
       ],
       price: 12,
       stock: 100,
-
       bestSeller: true,
       slug: "chocolate-mushroom-milk",
     },
@@ -207,8 +192,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/5_Seed_800x.jpg?v=1581706427"],
       price: 10.5,
       stock: 50,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "5-seed",
     },
     {
@@ -220,7 +204,6 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/BluePlantProtein_800x.jpg?v=1588794747"],
       price: 14,
       stock: 0,
-
       bestSeller: true,
       slug: "blue-plant-protein-shake",
     },
@@ -234,8 +217,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Immunity_1200x.jpg?v=1581718859"],
       price: 4.0,
       stock: 100,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "immunity",
     },
     {
@@ -246,8 +228,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Turmeric_Elixir_800x.jpg?v=1582074488"],
       price: 4,
       stock: 50,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "turmeric",
     },
     {
@@ -258,8 +239,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Liver_Regenerator_800x.jpg?v=1582074066"],
       price: 4,
       stock: 0,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "liver-regenerator",
     },
     {
@@ -271,8 +251,7 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Elderberry-Elixir-1_800x.jpg?v=1674595735"],
       price: 4,
       stock: 25,
-
-      bestSeller: true,
+      bestSeller: false,
       slug: "elderberry",
     },
     {
@@ -283,7 +262,6 @@ const products = {
       image: ["https://juiceshop.com/cdn/shop/products/Blue-Green_Algae_800x.jpg?v=1581708902"],
       price: 4,
       stock: 33,
-
       bestSeller: true,
       slug: "blue-green-algae",
     },

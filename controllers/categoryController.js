@@ -39,7 +39,6 @@ async function store(req, res) {
       try {
         const { name } = fields;
 
-        console.log(files);
         const newCategory = await Category.create({
           name,
           image: files.image.newFilename,

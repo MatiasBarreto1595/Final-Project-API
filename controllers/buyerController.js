@@ -11,7 +11,7 @@ async function index(req, res) {
 
 // Display the specified resource.
 async function show(req, res) {
-  if (req.auth.sub === req.params.id || req.auth.sub.role === "admin") {
+  if (req.auth.sub === req.params.id) {
     try {
       const buyer = await Buyer.findById(req.params.id).select("-password").populate("orders");
       return res.json(buyer);
@@ -55,9 +55,10 @@ async function store(req, res) {
 async function update(req, res) {
   try {
     let buyerToUpdate = await Buyer.findById(req.params.id);
-    let myBuyer = await Buyer.findById(req.auth.sub);
-    !myBuyer && (myBuyer = await Admin.findById(req.auth.sub));
-    if (!myBuyer) return res.json({ msg: "Not logued in" });
+    let myAdmin = await Admin.findById(req.auth.sub);
+    if (req.params.id !== req.auth.sub && !myAdmin) {
+      return res.json({ msg: "You don't have enough permissions" });
+    }
 
     const { firstname, lastname, email, direction, phone, password, newPassword } = req.body;
     if (password && verifyPassword) {
@@ -91,15 +92,8 @@ async function update(req, res) {
 // Remove the specified resource from storage.
 async function destroy(req, res) {
   try {
-    const buyerToDestroy = await Buyer.findById(req.params.id);
-
-    let myAdmin;
-    const myBuyer = await Buyer.findById(req.auth.sub);
-    !myBuyer && (myAdmin = await Admin.findById(req.auth.sub));
-    if (myBuyer && req.params.id === req.auth.sub) {
-      await Buyer.findByIdAndDelete(req.params.id);
-      return res.json({ msg: "Buyer successfully destroy" });
-    } else if (myAdmin) {
+    let myAdmin = await Admin.findById(req.auth.sub);
+    if (req.params.id === req.auth.sub || myAdmin) {
       await Buyer.findByIdAndDelete(req.params.id);
       return res.json({ msg: "Buyer successfully destroy" });
     } else {

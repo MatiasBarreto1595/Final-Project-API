@@ -59,17 +59,19 @@ async function update(req, res) {
     const adminToUpdate = await Admin.findById(req.params.id);
 
     let verifyPassword = null;
+    let hashedPassword = null;
     const { firstname, lastname, email, password, newPassword } = req.body;
-    password && (verifyPassword = await bcrypt.compare(password, adminToUpdate.password));
-    const hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : undefined;
-
-    if (verifyPassword) {
-      await Admin.findByIdAndUpdate(req.params.id, {
-        firstname,
-        lastname,
-        email,
-        password: hashedPassword,
-      });
+    if (password) {
+      verifyPassword = await bcrypt.compare(password, adminToUpdate.password);
+      hashedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : undefined;
+      if (verifyPassword) {
+        await Admin.findByIdAndUpdate(req.params.id, {
+          firstname,
+          lastname,
+          email,
+          password: hashedPassword,
+        });
+      }
     } else {
       await Admin.findByIdAndUpdate(req.params.id, {
         firstname,
