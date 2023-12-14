@@ -30,7 +30,6 @@ async function store(req, res) {
   form.parse(req, async (err, fields, files) => {
     const ext = path.extname(files.image.filepath);
     const newFileName = `image_${Date.now()}${ext}`;
-    
 
     const { data, error } = await supabase.storage
       .from("img")
@@ -39,7 +38,6 @@ async function store(req, res) {
         upsert: false,
         contentType: files.image.mimetype,
         duplex: "half",
-
       });
 
     const { name, description, ingredients, price, stock, category, bestSeller } = fields;
@@ -68,7 +66,7 @@ async function store(req, res) {
 async function update(req, res) {
   const form = formidable({
     multiples: true,
-    uploadDir: __dirname + "/../public/img",
+    // uploadDir: __dirname + "/../public/img",
     keepExtensions: true,
   });
 
@@ -81,7 +79,19 @@ async function update(req, res) {
       if (files[currentImage].size === 0) {
         imagenes.push(product.image[i]);
       } else {
+        const ext = path.extname(files[currentImage].filepath);
+        const newFileName = `image_${Date.now()}${ext}`;
+        files[currentImage].newFilename = newFileName;
         imagenes.push(files[currentImage].newFilename);
+
+        const { data, error } = await supabase.storage
+          .from("img")
+          .upload(newFileName, fs.createReadStream(files[currentImage].filepath), {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: files[currentImage].mimetype,
+            duplex: "half",
+          });
       }
     }
 
