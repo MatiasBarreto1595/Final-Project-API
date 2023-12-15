@@ -16,8 +16,8 @@ const Schema = mongoose.Schema;
 mongoose.connect(process.env.DB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  user: process.env.DB_USER,
-  pass: process.env.DB_PASSWORD,
+  // user: process.env.DB_USER,
+  // pass: process.env.DB_PASSWORD,
 });
 
 module.exports = { mongoose, Schema };
