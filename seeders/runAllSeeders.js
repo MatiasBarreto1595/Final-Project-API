@@ -26,6 +26,9 @@ async function runAllSeeders() {
   // const { mongoose } = require("../db");
   // await mongoose.connection.dropDatabase();
 
+  const { mongoose } = require("../db");
+  await mongoose.connection.dropDatabase();
+
   // Seeders:
 
   await require("./CategorySeeder")();
